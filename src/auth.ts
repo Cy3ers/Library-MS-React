@@ -1,8 +1,13 @@
-// ./Auth.js
+// ./auth.ts
 
-let currentUser = null;
+interface User {
+  username: string;
+  role: 'admin' | 'user';
+}
 
-export const login = (username, password) => {
+let currentUser: User | null = null;
+
+export const login = (username: string, password: string): User | null => {
   // Dummy authentication logic
   if (username === 'admin' && password === 'admin') {
     currentUser = { username, role: 'admin' };
@@ -14,15 +19,15 @@ export const login = (username, password) => {
   return currentUser;
 };
 
-export const isAuthenticated = () => {
+export const isAuthenticated = (): boolean => {
   return currentUser !== null;
 };
 
-export const getUser = () => {
+export const getUser = (): User | null => {
   return currentUser;
 };
 
-export const logout = () => {
+export const logout = (): void => {
   currentUser = null;
   window.location.reload();
 };

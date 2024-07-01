@@ -1,13 +1,14 @@
-// ./components/UserList.js
+// ./components/UserList.tsx
 
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
+import { User, UserListProps } from "../types";
 
-const UserList = ({ users, addUser, removeUser }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
+const UserList: FC<UserListProps> = ({ users, addUser, removeUser }) => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [role, setRole] = useState<string>("user");
 
-  const handleAddUser = (e) => {
+  const handleAddUser = (e: React.FormEvent) => {
     e.preventDefault();
     addUser({ username, password, role });
     setUsername("");
@@ -52,7 +53,7 @@ const UserList = ({ users, addUser, removeUser }) => {
         <button type='submit'>Add User</button>
       </form>
       <ul>
-        {users.map((user) => (
+        {users.map((user: User) => (
           <li key={user.username}>
             {user.username} ({user.role})<button onClick={() => removeUser(user.username)}>Remove</button>
           </li>

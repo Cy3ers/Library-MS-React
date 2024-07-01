@@ -1,26 +1,24 @@
-// ./components/Login.js
+// ./components/Login.tsx
 
-import React, { useState } from 'react';
-import { login } from '../auth';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { login } from "../auth";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Login: React.FC = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = login(username, password);
     if (user) {
-      navigate(user.role === 'admin' ? '/admin' : '/user');
+      navigate(user.role === "admin" ? "/admin" : "/user");
     } else {
-      setError('Invalid credentials');
+      setError("Invalid credentials");
     }
   };
-
-  console.log("Login component rendered");
 
   return (
     <div>
@@ -29,7 +27,7 @@ const Login = () => {
         <div>
           <label>Username:</label>
           <input
-            type="text"
+            type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -38,13 +36,13 @@ const Login = () => {
         <div>
           <label>Password:</label>
           <input
-            type="password"
+            type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type='submit'>Login</button>
       </form>
       {error && <p>{error}</p>}
     </div>
