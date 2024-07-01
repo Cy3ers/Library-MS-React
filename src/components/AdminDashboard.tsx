@@ -1,23 +1,19 @@
 // ./components/AdminDashboard.tsx
 
-import React, { useContext, useState } from "react";
-import AddBook from "./AddBook";
+import React from "react";
+import AddBook from "../containers/AddBookContainer";
 import UserList from "./UserList";
-import { BookContext } from "../contexts/BookContext";
 import { Book } from "../types";
 
-const AdminDashboard: React.FC = () => {
-  const { books, dispatch } = useContext(BookContext)!;
-  const [users, setUsers] = useState<{ username: string; password: string; role: string }[]>([]);
+interface AdminDashboardProps {
+  books: Book[];
+  dispatch: React.Dispatch<any>;
+  users: { username: string; password: string; role: string }[];
+  addUser: (user: { username: string; password: string; role: string }) => void;
+  removeUser: (username: string) => void;
+}
 
-  const addUser = (user: { username: string; password: string; role: string }) => {
-    setUsers([...users, user]);
-  };
-
-  const removeUser = (username: string) => {
-    setUsers(users.filter((user) => user.username !== username));
-  };
-
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch, users, addUser, removeUser }) => {
   return (
     <div>
       <h1 className='navbar'>Admin Dashboard</h1>
@@ -25,7 +21,7 @@ const AdminDashboard: React.FC = () => {
       <div className='book-list'>
         <h2 className='li-header'>Book List</h2>
         <ul>
-          {books.map((book: Book) => (
+          {books.map((book) => (
             <li key={book.isbn}>
               <div className='title'>{book.title}</div>
               <div className='author'>{book.author}</div>

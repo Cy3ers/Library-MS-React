@@ -1,25 +1,17 @@
 // ./components/Login.tsx
 
-import React, { useState } from "react";
-import { login } from "../auth";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
-const Login: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+interface LoginProps {
+  username: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  error: string;
+}
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const user = login(username, password);
-    if (user) {
-      navigate(user.role === "admin" ? "/admin" : "/user");
-    } else {
-      setError("Invalid credentials");
-    }
-  };
-
+const Login: React.FC<LoginProps> = ({ username, setUsername, password, setPassword, handleSubmit, error }) => {
   return (
     <div>
       <h2 className='navbar'>Login</h2>

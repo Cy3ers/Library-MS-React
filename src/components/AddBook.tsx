@@ -1,41 +1,15 @@
-import React, { useContext, useState, ChangeEvent, FormEvent, MouseEventHandler } from "react";
-import { BookContext } from "../contexts/BookContext";
+import React from "react";
 import { BiSolidBookAdd } from "react-icons/bi";
 
-const AddBook: React.FC = () => {
-  const { dispatch } = useContext(BookContext)!;
-  const [title, setTitle] = useState<string>("");
-  const [author, setAuthor] = useState<string>("");
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+type AddBookProps = {
+  title: string;
+  author: string;
+  isDisabled: boolean;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+};
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "title") {
-      setTitle(value);
-    } else if (name === "author") {
-      setAuthor(value);
-    }
-    setIsDisabled(title.trim() === "" || author.trim() === "");
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (title.trim() === "" || author.trim() === "") {
-      return;
-    }
-    dispatch({ type: "ADD_BOOK", book: { title, author } });
-    setTitle("");
-    setAuthor("");
-    setIsDisabled(true);
-  };
-
-  const handleIconClick: MouseEventHandler<SVGElement> = (e) => {
-    e.preventDefault();
-    if (!isDisabled) {
-      handleSubmit(e as any); // TypeScript workaround due to type mismatch
-    }
-  };
-
+const AddBook: React.FC<AddBookProps> = ({ title, author, isDisabled, handleInputChange, handleSubmit }) => {
   return (
     <div>
       <h2 className='input-header'>Add Books:</h2>
@@ -58,7 +32,7 @@ const AddBook: React.FC = () => {
         />
         <BiSolidBookAdd
           className={`add-button${isDisabled ? " disabled" : ""}`}
-          onClick={handleIconClick}
+          onClick={handleSubmit as any}
           style={{ cursor: isDisabled ? "not-allowed" : "pointer" }}
         />
       </form>

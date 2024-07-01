@@ -2,9 +2,9 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import AdminDashboard from "./components/AdminDashboard";
-import UserDashboard from "./components/UserDashboard";
+import LoginContainer from "./containers/LoginContainer";
+import AdminDashboardContainer from "./containers/AdminDashboardContainer";
+import UserDashboardContainer from "./containers/UserDashboardContainer";
 import PrivateRoute from "./PrivateRoute";
 import { isAuthenticated, getUser, logout } from "./auth";
 import BookContextProvider from "./contexts/BookContext";
@@ -17,13 +17,13 @@ const App: React.FC = () => {
           <Routes>
             <Route
               path='/login'
-              element={<Login />}
+              element={<LoginContainer />}
             />
             <Route
               path='/admin'
               element={
                 <PrivateRoute>
-                  <AdminDashboard />
+                  <AdminDashboardContainer />
                 </PrivateRoute>
               }
             />
@@ -31,7 +31,7 @@ const App: React.FC = () => {
               path='/user'
               element={
                 <PrivateRoute>
-                  <UserDashboard />
+                  <UserDashboardContainer />
                 </PrivateRoute>
               }
             />
