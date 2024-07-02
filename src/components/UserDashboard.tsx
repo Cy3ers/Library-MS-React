@@ -53,6 +53,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ books, handleIssueBook, h
       >
         Logout
       </button>
+      <br />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 // ./App.tsx
 
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, RouteObject, Navigate } from "react-router-dom";
 import withErrorBoundary from "./hoc/withErrorBoundary";
 import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
@@ -14,36 +14,38 @@ const ErrorBoundaryLoginContainer = withErrorBoundary(LoginContainer);
 const App: React.FC = () => {
   const [error, setError] = useState("");
 
+  const routes: RouteObject[] = [
+    {
+      path: "/login",
+      element: (
+        <ErrorBoundaryLoginContainer
+          error={error}
+          setError={setError}
+        />
+      )
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <PrivateRoute>
+          <DashboardContainer />
+        </PrivateRoute>
+      )
+    },
+    {
+      path: "/",
+      element: isAuthenticated() ? <Navigate to='/dashboard' /> : <Navigate to='/login' />
+    }
+  ];
+
+  const router = createBrowserRouter(routes);
+
   return (
-    <Router>
+    <BookContextProvider>
       <div className='App'>
-        <BookContextProvider>
-          <Routes>
-            <Route
-              path='/login'
-              element={
-                <ErrorBoundaryLoginContainer
-                  error={error}
-                  setError={setError}
-                />
-              }
-            />
-            <Route
-              path='/dashboard'
-              element={
-                <PrivateRoute>
-                  <DashboardContainer />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path='/'
-              element={isAuthenticated() ? <Navigate to='/dashboard' /> : <Navigate to='/login' />}
-            />
-          </Routes>
-        </BookContextProvider>
+        <RouterProvider router={router} />
       </div>
-    </Router>
+    </BookContextProvider>
   );
 };
 

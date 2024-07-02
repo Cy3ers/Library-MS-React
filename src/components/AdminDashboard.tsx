@@ -53,6 +53,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch, users,
       >
         Logout
       </button>
+      <br />
     </div>
   );
 };
