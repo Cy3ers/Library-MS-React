@@ -1,15 +1,19 @@
 // ./App.tsx
 
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import withErrorBoundary from "./hoc/withErrorBoundary";
 import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
 import PrivateRoute from "./PrivateRoute";
-import { isAuthenticated, logout } from "./auth";
+import { isAuthenticated } from "./auth";
 import BookContextProvider from "./contexts/BookContext";
 
+const ErrorBoundaryLoginContainer = withErrorBoundary(LoginContainer);
+
 const App: React.FC = () => {
+  const [error, setError] = useState("");
+
   return (
     <Router>
       <div className='App'>
@@ -17,7 +21,12 @@ const App: React.FC = () => {
           <Routes>
             <Route
               path='/login'
-              element={<LoginContainer />}
+              element={
+                <ErrorBoundaryLoginContainer
+                  error={error}
+                  setError={setError}
+                />
+              }
             />
             <Route
               path='/dashboard'
@@ -32,7 +41,6 @@ const App: React.FC = () => {
               element={isAuthenticated() ? <Navigate to='/dashboard' /> : <Navigate to='/login' />}
             />
           </Routes>
-          <button onClick={logout}>Logout</button>
         </BookContextProvider>
       </div>
     </Router>

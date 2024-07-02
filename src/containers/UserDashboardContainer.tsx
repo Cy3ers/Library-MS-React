@@ -12,10 +12,15 @@ const UserDashboardContainer: React.FC = () => {
     dispatch({ type: "ISSUE_BOOK", isbn });
   };
 
+  const handleReturnBook = (isbn: string) => {
+    dispatch({ type: "RETURN_BOOK", isbn });
+  };
+
   return (
     <UserDashboard
       books={books}
       handleIssueBook={handleIssueBook}
+      handleReturnBook={handleReturnBook}
     />
   );
 };

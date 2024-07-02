@@ -1,6 +1,6 @@
 // ./hoc/withErrorBoundary.tsx
 
-import React, { Component } from "react";
+import React, { Component, ComponentType } from "react";
 
 interface State {
   hasError: boolean;
@@ -8,8 +8,13 @@ interface State {
   errorInfo: React.ErrorInfo | null;
 }
 
-const withErrorBoundary = (WrappedComponent: React.ComponentType) => {
-  return class ErrorBoundary extends Component<{}, State> {
+interface Props {
+  error?: string;
+  setError?: (error: string) => void;
+}
+
+const withErrorBoundary = (WrappedComponent: ComponentType<any>) => {
+  return class ErrorBoundary extends Component<Props, State> {
     state: State = {
       hasError: false,
       error: null,
@@ -40,7 +45,13 @@ const withErrorBoundary = (WrappedComponent: React.ComponentType) => {
           </div>
         );
       }
-      return <WrappedComponent {...this.props} />;
+
+      return (
+        <>
+          <WrappedComponent {...this.props} />
+          {this.props.error && <div className='inv-error'>{this.props.error}</div>}
+        </>
+      );
     }
   };
 };

@@ -2,21 +2,33 @@
 
 interface User {
   username: string;
-  role: 'admin' | 'user';
+  password?: string;
+  role: "admin" | "user";
 }
 
 let currentUser: User | null = null;
 
+const getUsersFromLocalStorage = (): User[] => {
+  const storedUsers = localStorage.getItem("users");
+  return storedUsers ? JSON.parse(storedUsers) : [];
+};
+
 export const login = (username: string, password: string): User | null => {
   // Dummy authentication logic
-  if (username === 'admin' && password === 'admin') {
-    currentUser = { username, role: 'admin' };
-  } else if (username === 'user' && password === 'user') {
-    currentUser = { username, role: 'user' };
-  } else {
-    return null;
+  if (username === "admin" && password === "admin") {
+    currentUser = { username, role: "admin" };
+    return currentUser;
   }
-  return currentUser;
+
+  const users = getUsersFromLocalStorage();
+  const user = users.find((user) => user.username === username && user.password === password);
+
+  if (user) {
+    currentUser = user;
+    return currentUser;
+  }
+
+  return null;
 };
 
 export const isAuthenticated = (): boolean => {

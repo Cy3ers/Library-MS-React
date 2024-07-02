@@ -6,7 +6,7 @@ import { User, UserListProps } from "../types";
 const UserList: FC<UserListProps> = ({ users, addUser, removeUser }) => {
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const [role, setRole] = React.useState<string>("user");
+  const role = "user";
 
   const handleAddUser = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ const UserList: FC<UserListProps> = ({ users, addUser, removeUser }) => {
             required
           />
         </div>
-        <div>
+        {/* <div>
           <label>Role:</label>
           <br />
           <select
@@ -49,16 +49,30 @@ const UserList: FC<UserListProps> = ({ users, addUser, removeUser }) => {
             <option value='user'>User</option>
             <option value='admin'>Admin</option>
           </select>
-        </div>
-        <button type='submit'>Add User</button>
+        </div> */}
+        <button
+          className='submit-btn'
+          type='submit'
+        >
+          Add User
+        </button>
       </form>
-      <ul>
-        {users.map((user: User) => (
-          <li key={user.username}>
-            {user.username} ({user.role})<button onClick={() => removeUser(user.username)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+      <div className='user-list'>
+        <h2 className='li-header'>Users</h2>
+        <ul>
+          {users.map((user: User) => (
+            <li key={user.username}>
+              {user.username}{" "}
+              <button
+                className='del-button'
+                onClick={() => removeUser(user.username)}
+              >
+                Remove
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

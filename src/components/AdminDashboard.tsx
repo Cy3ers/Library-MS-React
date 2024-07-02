@@ -2,6 +2,7 @@
 
 import React from "react";
 import AddBook from "../containers/AddBookContainer";
+import { logout } from "../auth";
 import UserList from "./UserList";
 import { Book } from "../types";
 
@@ -28,21 +29,30 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch, users,
               <div className='isbn'>{book.isbn}</div>
               <div className='issued'>{book.checkedOut ? "Checked Out" : "Available"}</div>
               <div>
-                {book.checkedOut ? (
-                  <button onClick={() => dispatch({ type: "RETURN_BOOK", isbn: book.isbn })}>Return Book</button>
-                ) : (
-                  <button onClick={() => dispatch({ type: "REMOVE_BOOK", isbn: book.isbn })}>Delete Book</button>
+                {!book.checkedOut && (
+                  <button
+                    className='dispatch-button'
+                    onClick={() => dispatch({ type: "REMOVE_BOOK", isbn: book.isbn })}
+                  >
+                    Delete Book
+                  </button>
                 )}
               </div>
             </li>
           ))}
         </ul>
+        <UserList
+          users={users}
+          addUser={addUser}
+          removeUser={removeUser}
+        />
       </div>
-      <UserList
-        users={users}
-        addUser={addUser}
-        removeUser={removeUser}
-      />
+      <button
+        className='logout-button'
+        onClick={logout}
+      >
+        Logout
+      </button>
     </div>
   );
 };
