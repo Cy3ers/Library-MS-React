@@ -3,10 +3,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import LoginContainer from "./containers/LoginContainer";
-import AdminDashboardContainer from "./containers/AdminDashboardContainer";
-import UserDashboardContainer from "./containers/UserDashboardContainer";
+import DashboardContainer from "./containers/DashboardContainer";
 import PrivateRoute from "./PrivateRoute";
-import { isAuthenticated, getUser, logout } from "./auth";
+import { isAuthenticated, logout } from "./auth";
 import BookContextProvider from "./contexts/BookContext";
 
 const App: React.FC = () => {
@@ -20,34 +19,16 @@ const App: React.FC = () => {
               element={<LoginContainer />}
             />
             <Route
-              path='/admin'
+              path='/dashboard'
               element={
                 <PrivateRoute>
-                  <AdminDashboardContainer />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path='/user'
-              element={
-                <PrivateRoute>
-                  <UserDashboardContainer />
+                  <DashboardContainer />
                 </PrivateRoute>
               }
             />
             <Route
               path='/'
-              element={
-                isAuthenticated() ? (
-                  getUser()?.role === "admin" ? ( // Use optional chaining operator
-                    <Navigate to='/admin' />
-                  ) : (
-                    <Navigate to='/user' />
-                  )
-                ) : (
-                  <Navigate to='/login' />
-                )
-              }
+              element={isAuthenticated() ? <Navigate to='/dashboard' /> : <Navigate to='/login' />}
             />
           </Routes>
           <button onClick={logout}>Logout</button>

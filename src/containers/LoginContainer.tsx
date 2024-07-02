@@ -15,7 +15,7 @@ const LoginContainer: React.FC = () => {
     e.preventDefault();
     const user = login(username, password);
     if (user) {
-      navigate(user.role === "admin" ? "/admin" : "/user");
+      navigate("/dashboard");
     } else {
       setError("Invalid credentials");
     }
