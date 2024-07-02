@@ -3,6 +3,7 @@
 import React, { useContext, useState } from "react";
 import AdminDashboard from "../components/AdminDashboard";
 import { BookContext } from "../contexts/BookContext";
+import withErrorBoundary from "../hoc/withErrorBoundary";
 
 const AdminDashboardContainer: React.FC = () => {
   const { books, dispatch } = useContext(BookContext)!;
@@ -27,4 +28,4 @@ const AdminDashboardContainer: React.FC = () => {
   );
 };
 
-export default AdminDashboardContainer;
+export default withErrorBoundary(AdminDashboardContainer);

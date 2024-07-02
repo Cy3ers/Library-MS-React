@@ -3,6 +3,7 @@
 import React, { useContext } from "react";
 import UserDashboard from "../components/UserDashboard";
 import { BookContext } from "../contexts/BookContext";
+import withErrorBoundary from "../hoc/withErrorBoundary";
 
 const UserDashboardContainer: React.FC = () => {
   const { books, dispatch } = useContext(BookContext)!; // Type assertion
@@ -19,4 +20,4 @@ const UserDashboardContainer: React.FC = () => {
   );
 };
 
-export default UserDashboardContainer;
+export default withErrorBoundary(UserDashboardContainer);

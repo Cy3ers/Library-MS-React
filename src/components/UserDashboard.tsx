@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Book } from "../types";
+// import ErrorComponent from "./ErrorComponent";
 
 interface UserDashboardProps {
   books: Book[];
@@ -12,6 +13,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ books, handleIssueBook })
   return (
     <div>
       <h1 className='navbar'>User Dashboard</h1>
+      {/* <ErrorComponent /> */}
       <div className='book-list'>
         <ul>
           {books.map((book: Book) => {

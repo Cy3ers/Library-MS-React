@@ -2,6 +2,7 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import withErrorBoundary from "./hoc/withErrorBoundary";
 import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
 import PrivateRoute from "./PrivateRoute";
@@ -38,4 +39,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default withErrorBoundary(App);
