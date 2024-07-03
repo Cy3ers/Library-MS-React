@@ -15,7 +15,19 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ error, setError }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (username.trim() === "") {
+      setError("Username is required");
+      return;
+    }
+
+    if (password.trim() === "") {
+      setError("Password is required");
+      return;
+    }
+
     const user = login(username, password);
+
     if (user) {
       navigate("/dashboard");
     } else {
@@ -30,7 +42,6 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ error, setError }) => {
       password={password}
       setPassword={setPassword}
       handleSubmit={handleSubmit}
-      error={error}
     />
   );
 };

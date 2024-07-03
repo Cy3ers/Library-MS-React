@@ -141,7 +141,7 @@ input[type="password"] {
   opacity: 100%;
 }
 
-.inv-error {
+.error-msg {
   color: red;
   font-weight: bold;
   text-align: center;

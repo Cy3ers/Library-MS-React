@@ -1,9 +1,8 @@
-// ./containers/UserDashboardContainer.tsx
-
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import UserDashboard from "../components/UserDashboard";
 import { BookContext } from "../contexts/BookContext";
 import withErrorBoundary from "../hoc/withErrorBoundary";
+import { logout } from "../auth";
 
 const UserDashboardContainer: React.FC = () => {
   const { books, dispatch } = useContext(BookContext)!; // Type assertion
@@ -16,12 +15,35 @@ const UserDashboardContainer: React.FC = () => {
     dispatch({ type: "RETURN_BOOK", isbn });
   };
 
+  const [showIssuedOnly, setShowIssuedOnly] = useState(false);
+
+  const toggleShowIssuedOnly = () => {
+    setShowIssuedOnly(!showIssuedOnly);
+  };
+
+  const filteredBooks = showIssuedOnly ? books.filter((book) => book.checkedOut) : books;
+
   return (
-    <UserDashboard
-      books={books}
-      handleIssueBook={handleIssueBook}
-      handleReturnBook={handleReturnBook}
-    />
+    <div>
+      <UserDashboard
+        books={filteredBooks}
+        handleIssueBook={handleIssueBook}
+        handleReturnBook={handleReturnBook}
+      />
+      <button
+        className='dispatch-button'
+        onClick={toggleShowIssuedOnly}
+      >
+        {showIssuedOnly ? "Show All Books" : "Show Issued Books Only"}
+      </button>
+      <button
+        className='logout-button'
+        onClick={logout}
+      >
+        Logout
+      </button>
+      <br />
+    </div>
   );
 };
 

@@ -8,7 +8,6 @@ interface LoginProps {
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  error?: string;
 }
 
 const Login: React.FC<LoginProps> = ({ username, setUsername, password, setPassword, handleSubmit }) => {
@@ -16,24 +15,18 @@ const Login: React.FC<LoginProps> = ({ username, setUsername, password, setPassw
     <div>
       <h2 className='navbar'>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <label>Username:</label>
+        <input
+          type='text'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label>Password:</label>
+        <input
+          type='password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button
           className='submit-btn'
           type='submit'
