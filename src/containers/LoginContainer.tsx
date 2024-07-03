@@ -4,11 +4,13 @@ import { login } from "../auth";
 import { useNavigate } from "react-router-dom";
 
 interface LoginContainerProps {
-  error: string;
   setError: (error: string) => void;
+  usernameError?: string | null;
+  passwordError?: string | null;
+  invalidError?: string | null;
 }
 
-const LoginContainer: React.FC<LoginContainerProps> = ({ error, setError }) => {
+const LoginContainer: React.FC<LoginContainerProps> = ({ setError, usernameError, passwordError, invalidError }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -42,6 +44,9 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ error, setError }) => {
       password={password}
       setPassword={setPassword}
       handleSubmit={handleSubmit}
+      usernameError={usernameError}
+      passwordError={passwordError}
+      invalidError={invalidError}
     />
   );
 };

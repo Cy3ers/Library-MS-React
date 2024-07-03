@@ -1,24 +1,44 @@
 // ./components/AdminDashboard.tsx
 
 import React from "react";
-import AddBook from "../containers/AddBookContainer";
 import { logout } from "../auth";
-import UserList from "./UserList";
 import { Book } from "../types";
+import { useNavigate } from "react-router-dom";
 
 interface AdminDashboardProps {
   books: Book[];
   dispatch: React.Dispatch<any>;
-  users: { username: string; password: string; role: string }[];
-  addUser: (user: { username: string; password: string; role: string }) => void;
-  removeUser: (username: string) => void;
 }
 
-const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch, users, addUser, removeUser }) => {
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <h1 className='navbar'>Admin Dashboard</h1>
-      <AddBook />
+      <br />
+      {/* Route Here */}
+      <button
+        className='nav-button'
+        onClick={() => {
+          navigate("/dashboard/book");
+        }}
+      >
+        Add Books
+      </button>
+      <button
+        className='nav-button'
+        onClick={() => {
+          navigate("/dashboard/user");
+        }}
+      >
+        Add Users
+      </button>
+      <button
+        className='nav-button'
+        onClick={logout}
+      >
+        Logout
+      </button>
       <div className='book-list'>
         <h2 className='li-header'>Book List</h2>
         <ul>
@@ -41,19 +61,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch, users,
             </li>
           ))}
         </ul>
-        <UserList
-          users={users}
-          addUser={addUser}
-          removeUser={removeUser}
-        />
       </div>
-      <button
-        className='logout-button'
-        onClick={logout}
-      >
-        Logout
-      </button>
-      <br />
     </div>
   );
 };

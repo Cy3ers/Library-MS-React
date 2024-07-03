@@ -37,19 +37,6 @@ const UserList: FC<UserListProps> = ({ users, addUser, removeUser }) => {
             required
           />
         </div>
-        {/* <div>
-          <label>Role:</label>
-          <br />
-          <select
-            className='usr-selector'
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            required
-          >
-            <option value='user'>User</option>
-            <option value='admin'>Admin</option>
-          </select>
-        </div> */}
         <button
           className='submit-btn'
           type='submit'

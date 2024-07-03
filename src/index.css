@@ -105,6 +105,19 @@ input[type="password"] {
   pointer-events: auto;
 }
 
+.nav-button {
+  color: black;
+  cursor: pointer;
+  margin: 5px 50px;
+  background: #fff;
+  opacity: 75%;
+  border: 0;
+  border-radius: 3px;
+  padding: 9px 35px;
+  display: inline;
+  pointer-events: auto;
+}
+
 .del-button {
   color: black;
   cursor: pointer;
@@ -144,7 +157,5 @@ input[type="password"] {
 .error-msg {
   color: red;
   font-weight: bold;
-  text-align: center;
-  padding: 15px 15px;
-  background-color: #ccc;
+  margin-bottom: 15px;
 }

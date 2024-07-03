@@ -1,36 +1,45 @@
 // ./App.tsx
 
-import React, { useState } from "react";
-import { createBrowserRouter, RouterProvider, RouteObject, Navigate } from "react-router-dom";
+import React from "react";
+import { createBrowserRouter, RouterProvider, RouteObject, Navigate, Outlet } from "react-router-dom";
 import withErrorBoundary from "./hoc/withErrorBoundary";
 import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
 import PrivateRoute from "./PrivateRoute";
 import { isAuthenticated } from "./auth";
 import BookContextProvider from "./contexts/BookContext";
+import AddBookContainer from "./containers/AddBookContainer";
+import UserListContainer from "./containers/UserListContainer";
 
 const ErrorBoundaryLoginContainer = withErrorBoundary(LoginContainer);
 
 const App: React.FC = () => {
-  const [error, setError] = useState("");
-
   const routes: RouteObject[] = [
     {
-      path: "/login",
-      element: (
-        <ErrorBoundaryLoginContainer
-          error={error}
-          setError={setError}
-        />
-      )
+      path: "login",
+      element: <ErrorBoundaryLoginContainer />
     },
     {
-      path: "/dashboard",
-      element: (
-        <PrivateRoute>
-          <DashboardContainer />
-        </PrivateRoute>
-      )
+      path: "dashboard",
+      element: <Outlet />,
+      children: [
+        {
+          path: "",
+          element: (
+            <PrivateRoute>
+              <DashboardContainer />
+            </PrivateRoute>
+          )
+        },
+        {
+          path: "book",
+          element: <AddBookContainer />
+        },
+        {
+          path: "user",
+          element: <UserListContainer />
+        }
+      ]
     },
     {
       path: "/",

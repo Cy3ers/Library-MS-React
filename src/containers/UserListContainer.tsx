@@ -1,18 +1,35 @@
 // ./containers/UserListContainer.tsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserList from "../components/UserList";
-import { User } from "../types";
 
 const UserListContainer: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<{ username: string; password: string; role: string }[]>([]);
 
-  const addUser = (user: User) => {
-    setUsers([...users, user]);
+  const getUsersFromLocalStorage = (): { username: string; password: string; role: string }[] => {
+    const storedUsers = localStorage.getItem("users");
+    return storedUsers ? JSON.parse(storedUsers) : [];
+  };
+
+  useEffect(() => {
+    const storedUsers = getUsersFromLocalStorage();
+    setUsers(storedUsers);
+  }, []);
+
+  const addUser = (user: { username: string; password: string; role: string }) => {
+    const updatedUsers = [...users, user];
+    setUsers(updatedUsers);
+    saveUsersToLocalStorage(updatedUsers);
   };
 
   const removeUser = (username: string) => {
-    setUsers(users.filter((user) => user.username !== username));
+    const updatedUsers = users.filter((user) => user.username !== username);
+    setUsers(updatedUsers);
+    saveUsersToLocalStorage(updatedUsers);
+  };
+
+  const saveUsersToLocalStorage = (updatedUsers: { username: string; password: string; role: string }[]) => {
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   return (
