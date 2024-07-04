@@ -10,6 +10,7 @@ import { isAuthenticated } from "./auth";
 import BookContextProvider from "./contexts/BookContext";
 import AddBookContainer from "./containers/AddBookContainer";
 import UserListContainer from "./containers/UserListContainer";
+import ToastProvider from "./contexts/ToastContext";
 
 const ErrorBoundaryLoginContainer = withErrorBoundary(LoginContainer);
 
@@ -51,9 +52,11 @@ const App: React.FC = () => {
 
   return (
     <BookContextProvider>
-      <div className='App'>
-        <RouterProvider router={router} />
-      </div>
+      <ToastProvider>
+        <div className='App'>
+          <RouterProvider router={router} />
+        </div>
+      </ToastProvider>
     </BookContextProvider>
   );
 };

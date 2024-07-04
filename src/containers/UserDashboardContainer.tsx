@@ -3,16 +3,20 @@ import UserDashboard from "../components/UserDashboard";
 import { BookContext } from "../contexts/BookContext";
 import withErrorBoundary from "../hoc/withErrorBoundary";
 import { logout } from "../auth";
+import { useToast } from "../contexts/ToastContext";
 
 const UserDashboardContainer: React.FC = () => {
   const { books, dispatch } = useContext(BookContext)!; // Type assertion
+  const { showToast } = useToast();
 
   const handleIssueBook = (isbn: string) => {
     dispatch({ type: "ISSUE_BOOK", isbn });
+    showToast("Book Issued Successfully!");
   };
 
   const handleReturnBook = (isbn: string) => {
     dispatch({ type: "RETURN_BOOK", isbn });
+    showToast("Book Returned Successfully!");
   };
 
   const [showIssuedOnly, setShowIssuedOnly] = useState(false);

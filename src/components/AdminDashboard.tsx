@@ -4,6 +4,7 @@ import React from "react";
 import { logout } from "../auth";
 import { Book } from "../types";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../contexts/ToastContext";
 
 interface AdminDashboardProps {
   books: Book[];
@@ -12,6 +13,7 @@ interface AdminDashboardProps {
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch }) => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   return (
     <div>
       <h1 className='navbar'>Admin Dashboard</h1>
@@ -52,7 +54,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ books, dispatch }) => {
                 {!book.checkedOut && (
                   <button
                     className='dispatch-button'
-                    onClick={() => dispatch({ type: "REMOVE_BOOK", isbn: book.isbn })}
+                    onClick={() => {
+                      dispatch({ type: "REMOVE_BOOK", isbn: book.isbn });
+                      showToast("Book deleted successfully!");
+                    }}
                   >
                     Delete Book
                   </button>

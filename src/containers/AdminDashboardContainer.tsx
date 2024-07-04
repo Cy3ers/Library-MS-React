@@ -1,6 +1,6 @@
 // ./containers/AdminDashboardContainer.tsx
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import AdminDashboard from "../components/AdminDashboard";
 import { BookContext } from "../contexts/BookContext";
 import withErrorBoundary from "../hoc/withErrorBoundary";

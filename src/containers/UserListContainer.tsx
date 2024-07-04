@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import UserList from "../components/UserList";
+import { useToast } from "../contexts/ToastContext";
 
 const UserListContainer: React.FC = () => {
   const [users, setUsers] = useState<{ username: string; password: string; role: string }[]>([]);
+  const { showToast } = useToast();
 
   const getUsersFromLocalStorage = (): { username: string; password: string; role: string }[] => {
     const storedUsers = localStorage.getItem("users");
@@ -20,12 +22,14 @@ const UserListContainer: React.FC = () => {
     const updatedUsers = [...users, user];
     setUsers(updatedUsers);
     saveUsersToLocalStorage(updatedUsers);
+    showToast("User Added Successfully!");
   };
 
   const removeUser = (username: string) => {
     const updatedUsers = users.filter((user) => user.username !== username);
     setUsers(updatedUsers);
     saveUsersToLocalStorage(updatedUsers);
+    showToast("User Deleted Successfully!");
   };
 
   const saveUsersToLocalStorage = (updatedUsers: { username: string; password: string; role: string }[]) => {
