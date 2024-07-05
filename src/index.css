@@ -171,3 +171,27 @@ input[type="password"] {
   opacity: 0.9;
   z-index: 1000;
 }
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.text-center {
+  text-align: center;
+}
+.text-5xl {
+  font-size: 3rem; /* Adjust the font size as needed */
+  font-weight: 600; /* Semi-bold */
+  color: #e3342f; /* Red-600 */
+  margin-bottom: 1rem; /* 4 units */
+}
+.text-2xl {
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  font-weight: 600; /* Semi-bold */
+  color: #d1d5db; /* Gray-300 */
+}
+.mt-4 {
+  margin-top: 1rem; /* 4 units */
+}

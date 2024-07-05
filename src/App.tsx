@@ -11,6 +11,8 @@ import BookContextProvider from "./contexts/BookContext";
 import AddBookContainer from "./containers/AddBookContainer";
 import UserListContainer from "./containers/UserListContainer";
 import ToastProvider from "./contexts/ToastContext";
+import { ErrorBoundary } from "react-error-boundary";
+import { RenderError } from "./components/errors/ErrorBoundaryComponent";
 
 const ErrorBoundaryLoginContainer = withErrorBoundary(LoginContainer);
 
@@ -51,13 +53,18 @@ const App: React.FC = () => {
   const router = createBrowserRouter(routes);
 
   return (
-    <BookContextProvider>
-      <ToastProvider>
-        <div className='App'>
-          <RouterProvider router={router} />
-        </div>
-      </ToastProvider>
-    </BookContextProvider>
+    <div className='App'>
+      <ErrorBoundary
+        FallbackComponent={RenderError}
+        onError={() => console.log("Some error caught!!")}
+      >
+        <BookContextProvider>
+          <ToastProvider>
+            <RouterProvider router={router} />
+          </ToastProvider>
+        </BookContextProvider>
+      </ErrorBoundary>
+    </div>
   );
 };
 
